@@ -2,6 +2,9 @@
 Copyright ©Даниил Кузьмин,версия: 2017 Январь.По всем вопросам обращаться по почте:Daniil.Kuzmin@maykor.com
 Планирование задания.
 #>
+<#
+How to get current dir script, when I used Register-ScheduledJob cmdlet? It is only by Param((
+#>
 
 $name="CryptoPs"
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force
