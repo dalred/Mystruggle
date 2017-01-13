@@ -7,9 +7,6 @@ Copyright ©Даниил Кузьмин,версия: 2017 Январь.По в�
 Param(
     [String]$curDir
 )
-
-
-
 Param(
     [String]$curDir
 )
