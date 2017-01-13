@@ -15,7 +15,6 @@ $EventApp=Get-EventLog -LogName Application -After (Get-Date).AddMinutes(-20)
 $EventDown=Get-EventLog -LogName System  -Source USER32 -After (Get-Date).AddMinutes(-20)| 
 where { @(1076,1074) -contains ($_.InstanceId -bAnd 0xFFFF) }
 
-
 IF ((Test-Path $curDir\log) -ne "True") {
 New-Item  $curDir\log -type directory
 }
