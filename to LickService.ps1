@@ -5,10 +5,6 @@ How to get current dir script, when I used Register-ScheduledJob cmdlet? It is o
 Param(
     [String]$curDir
 )
-Param(
-    [String]$curDir
-)
-
 $myobject=@()
 $myobject2=@()
 $myobject3=@()
