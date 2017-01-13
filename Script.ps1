@@ -2,14 +2,12 @@
 Copyright ©Даниил Кузьмин,версия: 2017 Январь.По всем вопросам обращаться по почте:Daniil.Kuzmin@maykor.com
 #>
 <#
-How to get current dir script, when I used Register-ScheduledJob cmdlet? It is only by Param((
+Copyright ©Даниил Кузьмин,версия: 2017 Январь.По всем вопросам обращаться по почте:Dalred@mail.ru
 #>
 Param(
     [String]$curDir
 )
 
-  <#
-Copyright ©Даниил Кузьмин,версия: 2017 Январь.По всем вопросам обращаться по почте:Dalred@mail.ru
 
 
 Param(
