@@ -5,6 +5,7 @@ How to get current dir script, when I used Register-ScheduledJob cmdlet? It is o
 Param(
     [String]$curDir
 )
+
 $myobject=@()
 $myobject2=@()
 $myobject3=@()
@@ -12,8 +13,9 @@ $myobject3=@()
 $date1=(Get-Date).ToString('dd.MM.yyyy')
 $EventSys=Get-EventLog -LogName System -After (Get-Date).AddMinutes(-20)
 $EventApp=Get-EventLog -LogName Application -After (Get-Date).AddMinutes(-20)
-$EventDown=Get-EventLog -LogName System  -Source USER32 -After (Get-Date).AddMinutes(-20)| 
+$EventDown=Get-EventLog -LogName System  -Source USER32 -After (Get-Date).AddHours(-1)| 
 where { @(1076,1074) -contains ($_.InstanceId -bAnd 0xFFFF) }
+
 
 IF ((Test-Path $curDir\log) -ne "True") {
 New-Item  $curDir\log -type directory
@@ -49,7 +51,7 @@ Foreach ($EventDownElement in  $EventDown)
             $myobject3+=new-object psobject -property $properties4
      }
 }
-$myobject3|Sort-Object -Property "Время"|foreach {$_.Время.tostring()+" "+$_.Источник.tostring()+" "+$_.Сообщение.tostring()}|Out-File -Append "$curDir\log\$date1.txt"
+$myobject3|Sort-Object -Property "Время" -Unique|foreach {$_.Время.tostring()+" "+$_.Источник.tostring()+" "+$_.Сообщение.tostring()}|Out-File -Append "$curDir\log\$date1.txt"
 
 Service "Видит: "
 IF ($MyVar -ne "Running")
@@ -75,7 +77,7 @@ IF ($MyVar -ne "Running")
 
     }
     "`t"+"События за 20 минут до остановки!"|Out-File -Append "$curDir\log\$date1.txt"
-    $myobject|Sort-Object -Property "Время" -Unique|foreach {$_.Время.tostring()+" "+$_.Источник.tostring()+" "+$_.Сообщение.tostring()}|Out-File -Append "$curDir\log\$date1.txt"
+    $myobject|Sort-Object -Property "Время" -Unique|foreach {"`t"+$_.Время.tostring()+" "+$_.Источник.tostring()+" "+$_.Сообщение.tostring()}|Out-File -Append "$curDir\log\$date1.txt"
     Start-Service -name zCSSVC
     Start-Sleep -Milliseconds 1000
 Service "Принудительно запускает(скрипт)- "
@@ -92,9 +94,8 @@ $EventSys=Get-EventLog -LogName System -Source "Service Control Manager" -Messag
             }
         $myobject2+=new-object psobject -property $properties
         }
-    "`t"+"События которые происходили со службой последние 20 минут в случае ее запуска!"|Out-File -Append "$curDir\log\$date1.txt"
+    "`t"+"События которые происходили со службой последние 20 минут, в случае если служба не запускалась принудительно скриптом!"|Out-File -Append "$curDir\log\$date1.txt"
     $myobject2| Sort-Object -Property "Время" -Unique|where { $_.Сообщение -like "*CryptoServer Service*"}| foreach {"`t"+$_.Время.tostring()+" "+$_.Источник.tostring()+" "+$_.Сообщение.tostring()}|Out-File -Append "$curDir\log\$date1.txt"
     }
 }
 Exit 
- 
