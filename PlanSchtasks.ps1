@@ -2,8 +2,6 @@
 Copyright ©Даниил Кузьмин,версия: 2017 Январь.По всем вопросам обращаться по почте:Dalred@mail.ru;Daniil.Kuzmin@maykor.com
 Планирование задания.Собираем свой настраиваемый план.
 #>
-
-
 [Console]::outputEncoding = [System.Text.Encoding]::GetEncoding('cp866')
 $name="CryptoPs"
 SCHTASKS /Create /tr "powershell.exe -NoLogo -NonInteractive -WindowStyle Hidden -File $PSScriptRoot\$name.ps1" /TN $name /SC ONSTART /RL HIGHEST /DELAY 0010:00
