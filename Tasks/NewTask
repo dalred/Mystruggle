@@ -4,7 +4,6 @@ foreach ($element in $a)
 Set-ExecutionPolicy -Scope $element -ExecutionPolicy Restricted -Force
 }
 #>
-
 $servername = "localhost"
 $path="Microsoft\Windows\PowerShell\ScheduledJobs"
 $name="CryptoPs"
