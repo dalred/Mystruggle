@@ -6,6 +6,6 @@ You then define the properties for the new task and register
 the task. Properties for the new task include the Actions, Data, Principal, RegistrationInfo, Settings, Triggers, and XmlText. Of these properties, Data and XmlText are optional.
 
 So navigate to the Tasks folder, which that contains script to resolve problems with creation Tasks.
-###Background Jobs
+### Background Jobs
 >Use an existing interactive token to run a task. The user must log on using a service for user (S4U) logon.
 When an S4U logon is used, no password is stored by the system and there is no access to either the network or encrypted files.
