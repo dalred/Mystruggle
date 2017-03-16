@@ -4,7 +4,7 @@
 
 https://msdn.microsoft.com/en-us/library/windows/desktop/aa382542(v=vs.85).aspx
 
-You then define the properties for the new task and register
+>You then define the properties for the new task and register
 the task. Properties for the new task include the Actions, Data, Principal, RegistrationInfo, Settings, Triggers, and XmlText. Of these properties, Data and XmlText are optional.
 
 So navigate to the Tasks folder, which that contains script to resolve problems with creation Tasks.
