@@ -1,0 +1,43 @@
+$myobject=@()
+$server='localhost'
+if (-not(Get-Module -Name SQLPS)) {
+    if (Get-Module -ListAvailable -Name SQLPS) {
+        Push-Location
+        Import-Module -Name SQLPS -DisableNameChecking
+        Pop-Location
+    }
+}
+#Автоматически определяем нужную базу
+#Если бы это был не Powershell, пришлось в Sql делать это через exec.
+$query="select name AS name from sysdatabases where PATINDEX('db%[0-9]',name)>0;"
+$Dataname=Invoke-Sqlcmd -ServerInstance $server -Query "$query"
+$Index=$Dataname.name.Substring(2,6)
+$sql = @(
+"SELECT Recid,storeid AS Индекс ,SBPCryptoServerHost AS 'Адрес Криптосервера' from GM_RETAILSTOREPARAMETERS where STOREID=$Index",
+"SELECT Terminalid AS Окно,SBPTerminalNum AS 'Номер Терминала' from GM_RetailTerminalParameters where TerminalID like '%$Index%'",
+"SELECT @@SERVERNAME AS 'Имя Сервера'"
+)
+
+$request=Invoke-Sqlcmd -ServerInstance $server -Query "$($sql[0])" -Verbose -Database $Dataname.name 
+$request2=Invoke-Sqlcmd -ServerInstance $server -Query "$($sql[1])" -Verbose -Database $Dataname.name 
+$request3=Invoke-Sqlcmd -ServerInstance $server -Query "$($sql[2])" -Verbose -Database $Dataname.name 
+#Формирую нужный для себя объект.
+    Foreach ($element in $request2)
+    {
+        $properties = @{
+        Recid=""
+        Индекс=""
+        'Адрес Криптосервера'=""
+        Окно=$element.Окно
+        "Номера Терминалов"=$element.'Номер Терминала'
+        'Имя SQL сервера'=""
+        }
+        $myobject+=new-object psobject -property $properties
+    }
+
+    $names=@('Recid','Индекс','Адрес Криптосервера','Окно',"Номера Терминалов",'Имя SQL сервера')
+    $myobject[0].Recid=$request.Recid
+    $myobject[0].Индекс=$request.Индекс
+    $myobject[0].'Адрес Криптосервера'=$request.'Адрес Криптосервера'
+    $myobject[0].'Имя SQL сервера'=$request3.'Имя сервера'
+    $myobject|Select $names|Out-GridView -Title "Собственное представление: Daniil.Kuzmin@maykor.com"
