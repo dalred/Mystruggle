@@ -16,3 +16,4 @@ SQLPS is a set of extensions to Powershell for interacting with SQL Server.
 
 В последствии я выложу скрипты по пересозданию кластерных индексов, отсоединении SQL Constraints все это умещается в пару строк.
 Но огромный скрипт получился бы в пространстве .sql.
+![alt tag](http://image.prntscr.com/image/b5f6ed52e2c844d8b8ce3f3155a33824.png)
