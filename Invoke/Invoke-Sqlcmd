@@ -35,9 +35,9 @@ $request3=Invoke-Sqlcmd -ServerInstance $server -Query "$($sql[2])" -Verbose -Da
         $myobject+=new-object psobject -property $properties
     }
 
-    $names=@('Recid','Индекс','Адрес Криптосервера','Окно',"Номера Терминалов",'Имя SQL сервера')
-    $myobject[0].Recid=$request.Recid
-    $myobject[0].Индекс=$request.Индекс
-    $myobject[0].'Адрес Криптосервера'=$request.'Адрес Криптосервера'
-    $myobject[0].'Имя SQL сервера'=$request3.'Имя сервера'
-    $myobject|Select $names|Out-GridView -Title "Собственное представление: Daniil.Kuzmin@maykor.com"
+$names=@('Recid','Индекс','Адрес Криптосервера','Окно',"Номера Терминалов",'Имя SQL сервера')
+$myobject[0].Recid=$request.Recid
+$myobject[0].Индекс=$request.Индекс
+$myobject[0].'Адрес Криптосервера'=$request.'Адрес Криптосервера'
+$myobject[0].'Имя SQL сервера'=$request3.'Имя сервера'
+$myobject|Select $names|Out-GridView -Title "Собственное представление: Daniil.Kuzmin@maykor.com"
