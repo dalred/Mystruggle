@@ -28,3 +28,4 @@ SQLPS is a set of extensions to Powershell for interacting with SQL Server.
 <img src="http://image.prntscr.com/image/cde5ac86aa274481baf8ad33724032e1.png">
 </p>
 Но, что если мне хочется поработать с последним столбцом? status(Comma-separated list of values of database options that are currently set on the database.)
+Задача преобразовать последний столбец так чтобы информация о Collation и Status была доступна в отдельных столбцах.
