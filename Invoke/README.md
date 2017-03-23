@@ -29,31 +29,6 @@ SQLPS is a set of extensions to Powershell for interacting with SQL Server.
 </p>
 Но, что если мне хочется поработать с последним столбцом? status(Comma-separated list of values of database options that are currently set on the database.)
 Задача преобразовать последний столбец так чтобы информация о Collation и Status была доступна в отдельных столбцах.
-```
-$myobject=@()
-$server='localhost'
-
-$query="select name AS name from sysdatabases where PATINDEX('db%[0-9]',name)>0;"
-$Dataname=Invoke-Sqlcmd -ServerInstance $server -Query "$query"
-$Index=$Dataname.name.Substring(2,6)
-$sql = @("Sp_helpdb")
-
-$request=Invoke-Sqlcmd -ServerInstance $server -Query "$sql" -Database $Dataname.name 
-$requestSp=$request.Status -split ','
-$requestST=($requestSp.trim()|where {($_ -like "*Status*")} ).split("=")
-$requestCol=($requestSp.trim()|where {($_ -like "*Collation*")}).split("=")
-
-
-For ($k=0; $k -le $request.name.Count-1; $k++) { 
- $properties = @{
-    Имя=$request.name[$k]
-    Владелец=$request.owner[$k]
-    Размер=$request.db_size[$k]
-    Статус=$requestST[2*$k+1]
-    Colation=$requestCol[2*$k+1]
-    }
-    $myobject+=new-object psobject -property $properties
- } 
-  $names=@('Имя', 'Размер','Владелец','Статус', 'Colation')
- $myobject|Select $names|Sort-Object -Descending Размер|Out-GridView -Title КЕК
-```
+<p align="center">
+<img src="http://image.prntscr.com/image/1659f1d9d9d947ed9a891e5be33c4962.png">
+</p>
