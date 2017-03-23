@@ -30,7 +30,7 @@ SQLPS is a set of extensions to Powershell for interacting with SQL Server.
 Но, что если мне хочется поработать с последним столбцом? status(Comma-separated list of values of database options that are currently set on the database.)
 
 Задача преобразовать последний столбец так чтобы информация о Collation и Status была доступна в отдельных столбцах.
-На выходе я получаю такой результат, при помощи работы с **Invoke-Sqlcmd**
+На выходе я получаю такой результат, при помощи работы с `Invoke-Sqlcmd`
 <p align="center">
 <img src="http://image.prntscr.com/image/1659f1d9d9d947ed9a891e5be33c4962.png">
 </p>
