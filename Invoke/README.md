@@ -31,7 +31,7 @@ SQLPS is a set of extensions to Powershell for interacting with SQL Server.
 
 Задача преобразовать последний столбец так чтобы информация о Collation и Status была доступна в отдельных столбцах.
 На выходе я получаю такой результат, при помощи работы с `Invoke-Sqlcmd`.
-https://github.com/dalred/Mystruggle/blob/Pshellish/Invoke/sp_helpdb
+Пример кода.[ссылка](https://github.com/dalred/Mystruggle/blob/Pshellish/Invoke/sp_helpdb)
 <p align="center">
 <img src="http://image.prntscr.com/image/1659f1d9d9d947ed9a891e5be33c4962.png">
 </p>
