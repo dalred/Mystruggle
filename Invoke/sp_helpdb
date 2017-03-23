@@ -23,4 +23,4 @@ For ($k=0; $k -le $request.name.Count-1; $k++) {
     $myobject+=new-object psobject -property $properties
  } 
   $names=@('Имя', 'Размер','Владелец','Статус', 'Colation')
- $myobject|Select $names|Sort-Object -Descending Размер|Out-GridView -Title КЕК
+$myobject|Select $names|Sort-Object -Descending Размер|Out-GridView -Title КЕК
