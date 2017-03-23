@@ -1,6 +1,7 @@
 # And what about SQLPS?
 SQLPS is a set of extensions to Powershell for interacting with SQL Server.
 #### I have several things that I Hate to See in T-SQL.
+I was inspired this [article](http://michaeljswart.com/2010/08/ten-things-i-hate-to-see-in-t-sql/)
 *Чуть позже подготовлю английскую версию.*
 
 Я понимаю, что на сегодняшний день, если ты хорошо знаешь SQL, то тебе необязательно работать в пространстве скрипта .sql.
