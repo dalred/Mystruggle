@@ -1,0 +1,14 @@
+$strCurDir = $MyInvocation.MyCommand.Definition | split-path -parent
+$strWUCertName=(get-childitem "$strCurDir"|Where {$_.name -match "\.p12"})
+Write-host "Найден файл сертификата: $strWUCertName"
+$strWUTmp= get-content ($strCurDir+"\"+$strWUCertName.BaseName+".txt")
+$strWUPass=($strWUTmp -split "\|").get(1)
+
+
+$certs = New-Object system.security.cryptography.x509certificates.x509certificate2
+$flags = "UserKeySet"
+$certs.Import($strCurDir+"\"+$strWUCertName, $strWUPass, $flags)
+$store = new-object System.Security.Cryptography.X509Certificates.X509Store('My', 'CurrentUser')
+$store.open("MaxAllowed")
+$store.add($certs)
+$store.Close()
