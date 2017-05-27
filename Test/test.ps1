@@ -61,37 +61,36 @@ function Show-FormProcess_psf {
 "@ -IgnoreWarnings | Out-Null
 	}
 
-    $timerUpdate_Tick={
-    $timerUpdate.start()
-    do {  [System.Windows.Forms.Application]::DoEvents() }until ($Global:DownloadComplete)
-    $timerUpdate.stop()
-    $ProgressForm.close()
-    }
+    	$Global:DownloadComplete = $False
 
-    Function Downloader {
-    $webclient.DownloadFileAsync($source,$dest)
-    }
+    	$timerUpdate_Tick={
+    	$timerUpdate.start()
+    	do {  [System.Windows.Forms.Application]::DoEvents() } until ($Global:DownloadComplete)
+    	$timerUpdate.stop()
+    	$ProgressForm.close()
+   	$webclient.Dispose()
+    	}
 
 	[System.Windows.Forms.Application]::EnableVisualStyles()
 	$ProgressForm = New-Object 'System.Windows.Forms.Form'
 	$label1 = New-Object 'System.Windows.Forms.Label'
 	$progressbaroverlay1 = New-Object 'DaniilProgress.ProgressBarOverlay'
 	$InitialFormWindowState = New-Object 'System.Windows.Forms.FormWindowState'
-    $timerUpdate = New-Object 'System.Windows.Forms.Timer'
-
+    	$timerUpdate = New-Object 'System.Windows.Forms.Timer'
+    
 	$ProgressForm_Load={
 	$script:webclient = New-Object -TypeName System.Net.WebClient
 	$webclient.add_DownloadProgressChanged([System.Net.DownloadProgressChangedEventHandler]$webclient_DownloadProgressChanged)
 	$webclient.add_DownloadFileCompleted($webclient_DownloadFileCompleted)	
-    Downloader
+    	$webclient.DownloadFileAsync($source,$dest)
 	}
 	
-    $webclient_DownloadProgressChanged = {
-    param([object]$sender,[System.Net.DownloadProgressChangedEventArgs]$Global:e)
-    $progressbaroverlay1.value=$e.ProgressPercentage
-    $TotalBytes = (($e.TotalBytesToReceive)/1MB).tostring(.00)
-    $ReceivedBytes = (($e.BytesReceived)/1MB).tostring(.00)
-    $label1.Text=@"
+    	$webclient_DownloadProgressChanged = {
+    	param([object]$sender,[System.Net.DownloadProgressChangedEventArgs]$Global:e)
+    	$progressbaroverlay1.value=$e.ProgressPercentage
+    	$TotalBytes = (($e.TotalBytesToReceive)/1MB).tostring(.00)
+    	$ReceivedBytes = (($e.BytesReceived)/1MB).tostring(.00)
+    	$label1.Text=@"
 Загружается $ReceivedBytes mb из $TotalBytes mb `n
 "@
 	}
@@ -105,11 +104,7 @@ function Show-FormProcess_psf {
 	{
 		$ProgressForm.WindowState = $InitialFormWindowState
 	}
-    $ProgressForm_closing={
-    [System.Windows.Forms.Application]::Exit()
-    $webclient.CancelAsync()
-    }
-	
+   
 	$Form_Cleanup_FormClosed=
 	{
 		try
@@ -134,7 +129,7 @@ function Show-FormProcess_psf {
 	$ProgressForm.Name = 'ProgressForm'
 	$ProgressForm.Text = 'Процесс загрузки'
 	$ProgressForm.add_Load($ProgressForm_Load)
-    $ProgressForm.add_closing($ProgressForm_closing)
+     
 
 	$label1.Location = '13, 145'
 	$label1.Margin = '4, 0, 4, 0'
@@ -151,16 +146,14 @@ function Show-FormProcess_psf {
 	$ProgressForm.ResumeLayout()
 
 	$InitialFormWindowState = $ProgressForm.WindowState
-    $timerUpdate.add_Tick($timerUpdate_Tick)
-    $timerUpdate.Interval=1000
-    $timerUpdate.Enabled = $True 
+    	$timerUpdate.add_Tick($timerUpdate_Tick)
+    	$timerUpdate.Interval=1000
+    	$timerUpdate.Enabled = $True 
 	$ProgressForm.add_Load($Form_StateCorrection_Load)
 	$ProgressForm.add_FormClosed($Form_Cleanup_FormClosed)
-    $ProgressForm.ShowDialog()
-   
+    	$ProgressForm.ShowDialog()
 } 
 
 $script:source = 'https://www.kernel.org/pub/linux/kernel/v2.6/linux-2.6.18.tar.bz2'
 $script:dest = 'C:\tempDan\linux-2.6.18.tar.bz2'
-$Global:DownloadComplete = $False
 Show-FormProcess_psf | Out-Null
