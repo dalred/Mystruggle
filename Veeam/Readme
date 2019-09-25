@@ -1,0 +1,16 @@
+
+Написать скрипт на PowerShell, который выполняет SQL-запросы к базе данных на MS SQL Server:
+- На входе два параметра: конфигурационный файл с кредами к SQL-серверу и путь к файлу с SQL-запросом. 
+- На выходе результат выполнения SQL-скрипта.
+
+Формат конфигурационного файла (c:\auto\sql.config):
+serverName="mysql.mydomain.local"
+instanceName="sql2017"
+userName="admin"
+userPwd="qwerty"
+
+Пример файла с SQL-запросом (c:\auto\sql.query):
+select name from monitor.Servers where id=45
+
+Пример запуска: 
+executeSQLquery.ps1 c:\auto\sql.config c:\auto\sql.query
